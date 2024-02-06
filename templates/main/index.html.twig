@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello MainController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+{% include('partials/header.html.twig') %}
+<hr class="my-4 border border-stone-400" />
+
+<h3 class="text-stone-700 text-md md:text-2xl mt-4 text-center font-mono font-bold">
+    Welcome to my portfolio
+    <br />
+    See my projects
+</h3>
+
+<div class="flex flex-col md:flex-row mt-16 gap-4 container mx-auto font-bold">
+<img src="{{ asset('images/proj_screenshot.jpg') }}" class="w-96" alt="Project image">
+<div class="text-center md:text-left">
+    <h6 class="text-3xl">DevRide</h6>
+    <p class="mt-4 text-stone-700">Blog website</p>
+    <p class="text-stone-700">Symfony, Bootstrap</p>
+    <div class="flex flex-row gap-x-4 mt-8 justify-center md:justify-start">
+        <a href="#" class="btn-basic bg-button-secondary">Github</a>
+        <a href="#" class="btn-basic bg-button-ternary hover:brightness-150">See Demo</a>
+    </div>
+</div>
+</div>
+
+{% include('partials/footer.html.twig') %}
+{% endblock %}

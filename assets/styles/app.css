@@ -1,3 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+    .btn-basic {
+    @apply px-8 py-2 rounded-lg text-stone-200 text-center transition-all font-bold hover:shadow-xl duration-500 hover:brightness-150;
+    }
+}
+.logo-shadow {
+    text-shadow: 0 4px 0 rgba(41,30,30, 25%);
+}
