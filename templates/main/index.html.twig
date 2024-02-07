@@ -1,34 +1,77 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello MainController!{% endblock %}
+{% block title %}Welcome to my portfolio
+{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-{% include('partials/header.html.twig') %}
-<hr class="my-4 border border-stone-400" />
-
-<h3 class="text-stone-700 text-md md:text-2xl mt-4 text-center font-mono font-bold">
-    Welcome to my portfolio
-    <br />
-    See my projects
-</h3>
-
-<div class="flex flex-col md:flex-row mt-16 gap-4 container mx-auto font-bold">
-<img src="{{ asset('images/proj_screenshot.jpg') }}" class="w-96" alt="Project image">
-<div class="text-center md:text-left">
-    <h6 class="text-3xl">DevRide</h6>
-    <p class="mt-4 text-stone-700">Blog website</p>
-    <p class="text-stone-700">Symfony, Bootstrap</p>
-    <div class="flex flex-row gap-x-4 mt-8 justify-center md:justify-start">
-        <a href="#" class="btn-basic bg-button-secondary">Github</a>
-        <a href="#" class="btn-basic bg-button-ternary hover:brightness-150">See Demo</a>
+	{% include('partials/header.html.twig') %}
+	<hr class="my-4 border border-stone-400"/>
+	  
+	<div class="lg:container mr-4 lg:mx-auto">
+ {% for message in app.flashes('notice') %}
+    <div class="flash-notice font-bold">
+        {{ message }}
     </div>
-</div>
-</div>
+    {% endfor %}
+		<h3 class="text-stone-800 text-lg md:text-2xl mt-4 text-center md:text-right font-mono font-bold">
+			Welcome
+		</h3>
+		<p class="w-full md:w-3/4 lg:w-1/2 ms-auto text-stone-600 text-md text-base mt-4 text-center md:text-right font-mono">
+			It's a pleasure to have you here. Feel free to browse through my projects and delve into my blog for insights. I hope you find inspiration and creativity in what I have to share.
+			Enjoy your exploration!
+		</p>
+	</div>
 
-{% include('partials/footer.html.twig') %}
+	<!-- Project -->
+	<div class="flex flex-col md:flex-row mt-16 gap-8 container mx-auto items-center md:items-left font-bold">
+		<a href="#">
+				<img src="{{ asset('images/projects/cargofly.jpg') }}" class="w-72 mx-auto sm:w-96 rounded-xl transition-all duration-500 shadow-3xl hover:shadow-4xl brightness-95" alt="Project image">
+		</a>
+		<div class="text-center md:text-left">
+			<h6 class="text-3xl">CargoFly</h6>
+			<p class="mt-4 text-stone-700">Written in vanilla PHP. Well, with some JS, Boostrap and Twig as template renderer.</p>
+			<p class="text-stone-500 mt-4">Login: admin@admin pass: 123456</p>
+			<div class="flex flex-row gap-x-4 mt-8 justify-center md:justify-start">
+				<a href="https://github.com/piotr979/cargofly-mvc" class="btn-basic bg-button-secondary">Github</a>
+				<a href="https://cargofly-ff1ff6933495.herokuapp.com" class="btn-basic bg-button-ternary hover:brightness-150">See Demo</a>
+			</div>
+		</div>
+	</div>
+
+	<!-- Project -->
+	<div class="flex flex-col md:flex-row mt-16 gap-8 container mx-auto md:items-left font-bold">
+		<a href="#">
+				<img src="{{ asset('images/projects/fnstyle.jpg') }}" class="w-72 mx-auto sm:w-96 rounded-xl transition-all duration-500 shadow-3xl hover:shadow-4xl brightness-95" alt="Project image">
+		</a>
+		<div class="text-center md:text-left">
+			<h6 class="text-3xl">FnStyle - fashion shop</h6>
+			<p class="mt-4 text-stone-700">PHP+Symfony+MySQL+JS+Boostrap Project.</p>
+			<p class="text-stone-500 mt-4">Login: admin@admin pass: 123456</p>
+			<p class="text-stone-500 mt-0">User login: user@user.com pass: 123456</p>
+			<div class="flex flex-row gap-x-4 mt-8 justify-center md:justify-start">
+				<a href="https://github.com/piotr979/fnstyle" class="btn-basic bg-button-secondary">Github</a>
+				<a href="https://fnstyle-30039a004be2.herokuapp.com/" class="btn-basic bg-button-ternary hover:brightness-150">See Demo</a>
+			</div>
+		</div>
+	</div>
+
+	<!-- Project -->
+	<div class="flex flex-col md:flex-row mt-16 gap-8 container mx-auto md:items-left font-bold">
+		<a href="#">
+				<img src="{{ asset('images/projects/higher.jpg') }}" class="w-72 mx-auto sm:w-96 rounded-xl transition-all duration-500 shadow-3xl hover:shadow-4xl brightness-95" alt="Project image">
+		</a>
+		<div class="text-center md:text-left">
+			<h6 class="text-3xl">Higher</h6>
+			<p class="mt-4 text-stone-700">Publishing platform. PHP+Symfony+mySQL with some JS. </p>
+
+			<div class="flex flex-row gap-x-4 mt-8 justify-center md:justify-start">
+				<a href="https://github.com/piotr979/higher" class="btn-basic bg-button-secondary">Github</a>
+				<a href="https://higher-app-e67a46992477.herokuapp.com/" class="btn-basic bg-button-ternary hover:brightness-150">See Demo</a>
+			</div>
+		</div>
+	</div>
+	
+
+	{% include('partials/footer.html.twig') %}
 {% endblock %}

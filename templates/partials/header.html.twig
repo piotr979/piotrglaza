@@ -1,12 +1,24 @@
-<header class="flex flex-row justify-between items-center container mx-auto">
-<h1 class="tracking-tighter font-mono text-3xl md:text-5xl lg:text-7xl ms-1 mt-2 md:ms-0 mt-0 font-bold text-stone-700 text-left logo-shadow">Piotr Glaza</h1>
- <div>
- <button class="block lg:hidden">X</button>
- <ul class="hidden lg:flex md:flex-row space-x-12 font-bold text-stone-500 uppercase">
-<li><a href="#">Home</a></li>
-<li><a href="#">Blog</a></li>
-<li><a href="#" class="bg-button-primary btn-basic">Contact</a></li>
- </ul>
- </div>
+<header class="flex flex-row justify-between items-center xl:container sm:mx-4 lg:mx-8 xl:mx-auto">
+	<a href="{{ path('app_main' )}}">
+    <h1 class="tracking-tighter font-mono text-3xl md:text-5xl lg:text-6xl ms-1 mt-2 md:ms-0 mt-0 font-bold text-stone-700 text-left logo-shadow">Piotr Glaza</h1>
+    </a>
+	<div>
+		<button class="block lg:hidden mr-4 md:mr-0 mt-4 md:mt-3 btn-mobile-nav z-200 relative">
+			<img class="open-mobile-nav w-6 md:w-8" src="{{ asset('images/nav/hamburger.svg') }}" alt="menu button">
+			<img class="close-mobile-nav w-6 md:w-8" src="{{ asset('images/nav/close_dark.svg') }}" alt="close menu button">
+		</button>
+
+		<nav class="main-nav bg-secondary-background lg:bg-transparent absolute lg:static h-screen w-full lg:h-fit lg:w-fit z-0">
+			<ul class="flex flex-col lg:flex-row lg:space-x-12 space-y-8 lg:space-y-0 font-bold text-stone-200 lg:text-stone-500 uppercase items-center mt-32 lg:mt-0 text-2xl lg:text-base">
+				<li>
+					<a href="{{ path('app_main' )}}" class="transition-all hover:text-black hover:border-b-2 border-black">Home</a>
+				</li>
+				{# <li><a href="#" class="transition-all hover:text-black hover:border-b-2 border-black">Blog</a></li> #}
+				<li>
+					<a href="{{ path('contact') }}" class="bg-transparent lg:bg-button-primary btn-basic">Contact</a>
+				</li>
+			</ul>
+		</nav>
+	</div>
 
 </header>

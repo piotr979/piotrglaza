@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;600;700&family=Rubik:wght@400;500;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,9 +6,60 @@
 
 @layer components {
     .btn-basic {
-    @apply px-8 py-2 rounded-lg text-stone-200 text-center transition-all font-bold hover:shadow-xl duration-500 hover:brightness-150;
+        @apply px-8 py-2 rounded-lg text-stone-200 text-center transition-all font-bold hover:shadow-xl duration-500 hover:brightness-150;
+    }
+    .contact-input {
+        @apply bg-primary-shade-1 border border-stone-500 focus:outline-none focus:brightness-110;
+    }
+    .footer-link {
+        @apply text-main-dark-tint-3 font-sans text-sm leading-6 transition-all hover:text-main-dark-shade-1;
     }
 }
+
 .logo-shadow {
-    text-shadow: 0 4px 0 rgba(41,30,30, 25%);
+    text-shadow: 0 4px 0 rgba(41, 30, 30, 25%);
+}
+
+.close-mobile-nav {
+    display: none;
+}
+
+@media screen and (max-width: 1024px) {
+    .main-nav {
+        z-index: 100;
+        left: 0;
+        top: 0;
+        transform: translateX(100%);
+        opacity: 0;
+        pointer-events: none;
+        visibility: hidden;
+        transition: all .5s ease-in;
+    }
+
+    .nav-open .main-nav {
+        opacity: 1;
+        pointer-events: auto;
+        visibility: visible;
+        transform: translateX(0);
+    }
+
+    .nav-open .close-mobile-nav {
+        display: block;
+    }
+
+    .nav-open .open-mobile-nav {
+        display: none;
+    }
+}
+
+footer:before {
+    content: ' ';
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.6;
+    background-repeat: repeat;
 }

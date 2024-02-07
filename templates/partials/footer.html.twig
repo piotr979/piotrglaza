@@ -1,7 +1,61 @@
-<footer class="bg-secondary-background mt-16">
-<div class="container mx-auto py-8">
-    <h3 class="text-stone-200 text-2xl text-center">
-[‘PHP’, ‘Symfony’, ‘Drupal‘, ‘JS’, ‘Tailwind’, ‘Bootstrap’]; 
-    </h3>
-</div>
+<style>
+	footer:before {
+		background-image: url('images/binding-light.png');
+	}
+</style>
+<footer class="bg-secondary-background mt-16 border-t-2 border-stone-600 relative">
+	<div class="footer-content relative">
+		<div class="flex flex-col md:flex-row justify-between xl:justify-evenly container ps-4 md:ps-0 mx-auto py-8">
+			<div>
+				<p class="font-bold text-white font-sans mb-2">Known technologies</p>
+				<ul>
+					<li><a href="https://php.net" class="footer-link">PHP</a></li>
+					<li><a href="https://symfony.com" class="footer-link">Symfony</a></li>
+					<li><a href="https://drupal.org" class="footer-link">Drupal</a></li>
+					<li><a href="https://javascript.info" class="footer-link">Javascript</a></li>
+					<li><a href="https://tailwindcss.com" class="footer-link">Tailwind</a></li>
+					<li><a href="https://getbootstrap.com/" class="footer-link">Bootstrap</a></li>
+				</ul>
+			</div>
+			<div class="mt-4 md:mt-0">
+				<p class="font-bold text-white font-sans mb-2">Links</p>
+				<ul>
+					<li>
+						<ahref="{{path('app_main')}}" class="footer-link">Home</ahref=>
+					</li>
+					<li>
+						<ahref="{{path('contact')}}" class="footer-link">Blog</ahref=>
+					</li>
+					<li>
+						<ahref="{{path('contact')}}" class="footer-link">Contact</ahref=>
+					</li>
+				</ul>
+			</div>
+
+			<div class="mt-4 md:mt-0">
+				<p class="font-bold text-white font-sans mb-2">My details</p>
+				<ul>
+					<li>
+						<p class="footer-link">Piotr Glaza</p>
+					</li>
+					<li>
+						<a href="https://www.linkedin.com/in/piotr-glaza-a753662a7" class="footer-link">LinkedIn</a>
+					</li>
+					<li>
+						<a href="tel:+48516743450" class="footer-link">Tel. 516 743 450</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+
+		<p class="text-center text-main-dark-tint-2 font-sans">More information you may find on</p>
+		<div class="flex flex-row justify-center gap-x-8 pt-2 pb-4">
+			<a href="https://github.com/piotr979">
+				<img src="images/logos/social-github.svg" class="w-8" alt="Github link">
+			</a>
+			<a href="https://www.linkedin.com/in/piotr-glaza-a753662a7">
+				<img src="images/logos/social-linkedin.svg" class="w-8" alt="Linked in link">
+			</a>
+		</div>
+	</div>
 </footer>

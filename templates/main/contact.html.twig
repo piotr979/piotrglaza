@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contact with me
+{% endblock %}
+
+{% block body %}
+
+	{% include('partials/header.html.twig') %}
+	<div class="container mx-auto flex flex-col items-center sm:items-start">
+		<h3 class="text-2xl font-bold mt-8">Contact form</h3>
+
+		{{ form_start(form) }}
+		<div class="font-sans mt-4">
+			<p class="mt-2 font-medium">Name</p>
+			{{ form_widget(form.name, {'attr': {'class': 'contact-input' }}) }}
+			<p class="mt-4 font-medium">Email</p>
+			{{ form_widget(form.email, {'attr': {'class': 'contact-input' }}) }}
+			<p class="mt-4 font-medium">Message</p>
+			{{ form_widget(form.message, {'attr': {'class': 'contact-input' }}) }}
+			<div>
+				{{ form_widget(form.submit, {'attr': {'class': 'bg-button-primary btn-basic font-bold font-mono mt-4 uppercase' }}
+				)}}
+
+			</div>
+		</div>
+        {{ form_end(form) }}
+	</div>
+	{% include('partials/footer.html.twig') %}
+{% endblock %}
