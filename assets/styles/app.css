@@ -5,8 +5,15 @@
 @tailwind utilities;
 
 @layer components {
+
+    .logo-shadow {
+        text-shadow: 0 4px 0 rgba(41, 30, 30, 25%);
+    }
     .btn-basic {
         @apply px-8 py-2 rounded-lg text-stone-200 text-center transition-all font-bold hover:shadow-xl duration-500 hover:brightness-150;
+    }
+    .logo {
+        @apply tracking-tighter font-mono text-3xl md:text-5xl lg:text-6xl ms-1 mt-2 md:ms-0 mt-0 font-bold text-stone-700 text-left logo-shadow
     }
     .contact-input {
         @apply bg-primary-shade-1 border border-stone-500 focus:outline-none focus:brightness-110;
@@ -14,14 +21,16 @@
     .footer-link {
         @apply text-main-dark-tint-3 font-sans text-sm leading-6 transition-all hover:text-main-dark-shade-1;
     }
+    .main-menu {
+        @apply main-nav bg-secondary-background lg:bg-transparent absolute lg:static h-screen w-full lg:h-fit lg:w-fit z-0;
+    }
 }
 
-.logo-shadow {
-    text-shadow: 0 4px 0 rgba(41, 30, 30, 25%);
-}
+
 
 .close-mobile-nav {
     display: none;
+    color: #BCB5A4
 }
 
 @media screen and (max-width: 1024px) {
@@ -62,4 +71,9 @@ footer:before {
     height: 100%;
     opacity: 0.6;
     background-repeat: repeat;
+}
+tbody th, td {
+    padding-right: 4rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
 }

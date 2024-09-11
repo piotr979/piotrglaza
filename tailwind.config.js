@@ -14,6 +14,7 @@ module.exports = {
         'primary-background': '#BCB5A4',
         'primary-shade-1': '#A69D87',
         'secondary-background': '#646A5D',
+        'admin-background': "#3C3A34",
         'main-dark': '#333333',
         'main-dark-tint-1': '#656565',
         'main-dark-tint-2': "#B2B3A2",
