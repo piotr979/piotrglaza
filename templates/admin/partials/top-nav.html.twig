@@ -1,12 +1,11 @@
-
 <header class="flex flex-row justify-between items-center xl:container sm:mx-4 lg:mx-8 xl:mx-auto">
 	<a href="{{ path('app_main' )}}" class="logo text-stone-500">
 		Dashboard
 	</a>
-		<button class="block lg:hidden mr-4 md:mr-0 mt-4 md:mt-3 btn-mobile-nav z-200 relative">
-			<img class="open-mobile-nav w-6 md:w-8" src="{{ asset('images/nav/hamburger.svg') }}" alt="menu button">
-			<img class="close-mobile-nav w-6 md:w-8" src="{{ asset('images/nav/close_dark.svg') }}" alt="close menu button">
-		</button>
+	<button class="block lg:hidden mr-4 md:mr-0 mt-4 md:mt-3 btn-mobile-nav z-200 relative">
+		<img class="open-mobile-nav w-6 md:w-8" src="{{ asset('images/nav/hamburger.svg') }}" alt="menu button">
+		<img class="close-mobile-nav w-6 md:w-8" src="{{ asset('images/nav/close_dark.svg') }}" alt="close menu button">
+	</button>
 
 	<nav class="main-menu bg-stone-800 lg:bg-transparent">
 		<ul class=" flex flex-col lg:flex-row font-bold text-stone-500 uppercase items-center text-2xl mt-32 space-y-8 lg:space-y-0 lg:mt-0 lg:text-base lg:space-x-8 ">
@@ -16,14 +15,15 @@
 			<li class="hover:text-stone-200 ">
 				<a href="{{ path('admin_categories') }}">Categories</a>
 			</li>
-				<li class="hover:text-stone-200 ">
+			<li class="hover:text-stone-200 ">
 				<a href="{{ path('admin_tags') }}">Tags</a>
 			</li>
-				<li class="hover:text-stone-200 ">
+			<li class="hover:text-stone-200 ">
 				<a href="{{ path('admin_settings') }}">Settings</a>
 			</li>
 			<li>
 				<a href="{{ path('app_logout') }}" class="bg-transparent lg:bg-button-secondary btn-basic">Logout</a>
 			</li>
 		</ul>
-		<nav></header>
+		<nav>
+</header>

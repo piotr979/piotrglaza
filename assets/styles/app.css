@@ -6,9 +6,6 @@
 
 @layer components {
 
-    .logo-shadow {
-        text-shadow: 0 4px 0 rgba(41, 30, 30, 25%);
-    }
     .btn-basic {
         @apply px-8 py-2 rounded-lg text-stone-200 text-center transition-all font-bold hover:shadow-xl duration-500 hover:brightness-150;
     }
@@ -24,21 +21,40 @@
     .main-menu {
         @apply main-nav bg-secondary-background lg:bg-transparent absolute lg:static h-screen w-full lg:h-fit lg:w-fit z-0;
     }
+    .admin-form input {
+        @apply bg-secondary-background;
+    }
+    .admin-form button {
+        @apply btn-basic border text-stone-700 bg-primary-shade-1 mt-4;
+    }
+}
+.logo-shadow {
+    text-shadow: 0 4px 0 rgba(41, 30, 30, 25%);
 }
 
-
-
+/* Pagination */
+.page, .next, .last, .previous, .first {
+    color: #8a8271;
+} 
+.current {
+    font-weight: bold;
+}
 .close-mobile-nav {
     display: none;
     color: #BCB5A4
 }
 
+.admin-form label {
+    display: block;
+    padding-top: 2rem;
+    padding-bottom: 1rem;
+}
 @media screen and (max-width: 1024px) {
     .main-nav {
         z-index: 100;
         left: 0;
         top: 0;
-        transform: translateX(100%);
+        transform: translateX(-100%);
         opacity: 0;
         pointer-events: none;
         visibility: hidden;

@@ -19,7 +19,6 @@ class BlogController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $article = $form->getData();
-
             return $this->redirectToRoute('app_admin');
         }
         return $this->render('blog/new-article.html.twig', [

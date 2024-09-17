@@ -1,6 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html class="overflow-x-hidden">
 	<head>
+	{# rel links for pagination #}
+
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>
@@ -17,8 +19,5 @@
 		{% endblock %}
 		{% block javascripts %}{% endblock %}
 	</head>
-<body class="bg-admin-background font-mono"> 
+<body class="bg-admin-background font-mono text-slate-200 overflow-hidden"> 
 {% include('admin/partials/top-nav.html.twig') %}
-{% block body %}{% endblock %}
-
-</body></html>

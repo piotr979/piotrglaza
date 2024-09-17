@@ -1,0 +1,14 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Tags{% endblock %}
+
+{% block body %}
+<div class="admin-form container mx-auto mt-4">
+{% if isNewTag == true %}
+		Add new tag
+	{% else %}
+		Edit existing tag
+	{% endif %}
+   {{ form(form) }}
+</div>
+{% endblock %}
