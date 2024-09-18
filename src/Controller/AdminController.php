@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Category;
 use App\Entity\Tag;
+use App\Form\CategoryType;
 use App\Form\TagType;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\ORM\EntityManagerInterface;
@@ -26,12 +28,58 @@ class AdminController extends AbstractController
     #[Route('/articles', name:'admin_articles')]
     public function articles(): Response
     {
-        return $this->render('admin/articles.html.twig');
+        return $this->render('admin/articles/articles.html.twig');
     }
     #[Route('/categories', name:'admin_categories')]
-    public function categories(): Response
+    public function categories(PaginatorInterface $paginator, Request $request): Response
     {
-        return $this->render('admin/categories.html.twig');
+        $dql = "SELECT c from App\Entity\Category c";
+        $query = $this->entityManager->createQuery($dql);
+        $pagination = $paginator->paginate(
+            $query,
+            $request->query->getInt('page',1),
+            10
+        );
+        return $this->render('admin/categories/categories.html.twig', [
+            'pagination' => $pagination,
+        ]);
+    }
+    #[Route('/category-edit/{id}', name: 'admin_category_edit')]
+    public function newCategory(EntityManagerInterface $em, Request $request, int $id = 0): Response
+    {
+        $category = new Category();
+        $isNewCategory = true;
+        if ($id != 0 ) {
+            $category = $em->getRepository(Category::class)->find($id);
+            if (!$category) {
+                throw $this->createNotFoundException('No category found for id' . $id);
+            }
+            $isNewTag = false;
+        }
+        $form = $this->createForm(CategoryType::class, $category);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $category = $form->getData();
+            $em->persist($category);
+            $em->flush();
+            return $this->redirectToRoute('admin_categories');
+        }
+        return $this->render('admin/categories/category-edit.html.twig', [
+            'form' => $form->createView(),
+            'category' => $category,
+            'isNewCategory' => $isNewCategory,
+        ]);
+    }
+    #[Route('/category-delete/{id}', name: "admin_category_delete")]
+    public function deleteCategory(EntityManagerInterface $em, Request $request, int $id): Response
+    {
+        $category = $em->getRepository(Category::class)->find($id);
+        if (!$category) {
+            throw $this->createNotFoundException("Tag not found");
+        }
+        $em->remove($category);
+        $em->flush();
+        return $this->redirectToRoute("admin_categories");
     }
     #[Route('/tags', name: 'admin_tags')]
     public function tags(PaginatorInterface $paginator, Request $request): Response
@@ -43,7 +91,7 @@ class AdminController extends AbstractController
             $request->query->getInt('page',1),
             10
         );
-        return $this->render('admin/tags.html.twig', [
+        return $this->render('admin/tags/tags.html.twig', [
             'pagination' => $pagination,
         ]);
     }
@@ -67,7 +115,7 @@ class AdminController extends AbstractController
             $em->flush();
             return $this->redirectToRoute('admin_tags');
         }
-        return $this->render('admin/tag-edit.html.twig', [
+        return $this->render('admin/tags/tag-edit.html.twig', [
             'form' => $form->createView(),
             'tag' => $tag,
             'isNewTag' => $isNewTag,
@@ -87,6 +135,6 @@ class AdminController extends AbstractController
     #[Route('/settings', name: 'admin_settings')]
     public function settings(): Response
     {
-        return $this->render('admin/settings.html.twig');
+        return $this->render('admin/settings/settings.html.twig');
     }
 }

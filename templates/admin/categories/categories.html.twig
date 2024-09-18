@@ -1,0 +1,43 @@
+{% include('admin/partials/header.html.twig') %}
+
+{% block body %}
+	<div class="lg:container mr-4 ps-1 pb-1 md:ps-0 lg:mx-auto">
+		<h1 class="my-4">Categories</h1>
+		<div class="overflow-scroll">
+			<table class="table-auto border-spacing-2 border-collapse border border-main-dark-shade-1 w-full md:w-fit text-left">
+				<tr	class="bg-primary-shade-1 text-black">
+					{# sorting of properties based on query components #}
+					<th class="ps-2">{{ knp_pagination_sortable(pagination, 'Id', 'c.id') }}</th>
+					<th {% if pagination.isSorted('t.name') %} class="sorted" {% endif %}>
+						{{ knp_pagination_sortable(pagination, 'Category', 'c.name') }}
+					</th>
+					<th class="text-center">
+						Ops
+					</th>
+				</tr>
+
+				{# table body #}
+				{% for category in pagination %}
+					<tr {% if loop.index is odd %} class="bg-main-dark-shade-1" {% endif %}>
+						<td class="ps-2">{{ category.id }}</td>
+						<td>{{ category.name }}</td>
+						<td class="pe-2">
+							<div class="flex flex-row items-center justify-between w-full">
+								<a href="{{ path('admin_category_edit', { 'id': category.id }) }}" class="btn-basic bg-button-ternary">EDT</a>
+								<a href="{{ path('admin_category_delete', { 'id': category.id }) }}" class="btn-basic bg-button-secondary ms-2">DEL</a>
+							</div>
+						</td>
+					</tr>
+				{% endfor %}
+			</table>
+		</div>
+		{# display navigation #}
+		<div class="navigation mt-4">
+			{{ knp_pagination_render(pagination) }}
+		</div>
+		<div class="flex flex-row">
+			<a href="{{ path('admin_category_edit', { 'id': 0 }) }}" class="mt-4 btn-basic bg-button-ternary">Add</a>
+		</div>
+	</div>
+{% endblock %}
+{% include('admin/partials/footer.html.twig') %}

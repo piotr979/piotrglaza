@@ -1,18 +1,18 @@
 {% include('admin/partials/header.html.twig') %}
 
 {% block body %}
-	<div class="lg:container mr-4 lg:mx-auto">
+	<div class="lg:container mr-4 ps-1 pb-1 md:ps-0 lg:mx-auto">
 		<h1 class="my-4">Tags</h1>
 		<div class="overflow-scroll">
 			<table class="table-auto border-spacing-2 border-collapse border border-main-dark-shade-1 w-full md:w-fit text-left">
-				<tr class="bg-primary-shade-1 text-black">
+				<tr	class="bg-primary-shade-1 text-black">
 					{# sorting of properties based on query components #}
 					<th class="ps-2">{{ knp_pagination_sortable(pagination, 'Id', 't.id') }}</th>
 					<th {% if pagination.isSorted('t.name') %} class="sorted" {% endif %}>
-						{{ knp_pagination_sortable(pagination, 'Title', 'a.name') }}
+						{{ knp_pagination_sortable(pagination, 'Title', 't.name') }}
 					</th>
 					<th class="text-center">
-					Ops
+						Ops
 					</th>
 				</tr>
 
@@ -30,42 +30,11 @@
 					</tr>
 				{% endfor %}
 			</table>
-			{# display navigation #}
 		</div>
+		{# display navigation #}
 		<div class="navigation mt-4">
 			{{ knp_pagination_render(pagination) }}
 		</div>
-
-		
-		{# <div class="overflow-scroll">
-						<table class="table-auto border-spacing-2 border-collapse border w-full md:w-fit text-left">
-							<thead>
-								<tr>
-									<th class="ps-2">No.</th>
-									<th>Name</th>
-									<th class="text-center">Operations</th>
-								</tr>
-							</thead>
-							<tbody>
-								{% set index = 1 %}
-								{% for tag in tags %}
-									<tr>
-										<td class="ps-2">{{ index }}</td>
-										<td>{{ tag.name }}
-										</td>
-										<td class="pe-2">
-											<div class="flex flex-row items-center justify-between w-full">
-												<a href="{{ path('admin_tag_edit', { 'id': tag.id }) }}" class="btn-basic bg-button-ternary">Edit</a>
-												<a href="{{ path('admin_tag_delete', { 'id': tag.id }) }}" class="btn-basic bg-button-secondary ms-2">Delete</a>
-											</div>
-										</td>
-									</tr>
-									{% set index = index + 1 %}
-								{% endfor %}
-				
-							</tbody>
-						</table>
-					</div> #}
 		<div class="flex flex-row">
 			<a href="{{ path('admin_tag_edit', { 'id': 0 }) }}" class="mt-4 btn-basic bg-button-ternary">Add</a>
 		</div>
