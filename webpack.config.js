@@ -1,5 +1,5 @@
 const Encore = require('@symfony/webpack-encore');
-
+const { styles } = require( '@ckeditor/ckeditor5-dev-utils' );
 // Manually configure the runtime environment if not already configured yet by the "encore" command.
 // It's useful when you use tools that rely on webpack.config.js file.
 if (!Encore.isRuntimeEnvironmentConfigured()) {
@@ -14,7 +14,6 @@ Encore
     .setPublicPath('/build')
     // only needed for CDN's or subdirectory deploy
     //.setManifestKeyPrefix('build/')
-
     /*
      * ENTRY CONFIG
      *
@@ -56,10 +55,34 @@ Encore
 
     // enables Sass/SCSS support
     //.enableSassLoader()
-
+    .addEntry('ckeditor_init', './assets/js/ckeditor/ckeditor_init.js')
     // uncomment if you use TypeScript
     //.enableTypeScriptLoader()
+    // Use raw-loader for CKEditor 5 SVG files.
+    .addRule( {
+        test: /ckeditor5-[^/\\]+[/\\]theme[/\\]icons[/\\][^/\\]+\.svg$/,
+        loader: 'raw-loader'
+    } )
 
+    // Configure other image loaders to exclude CKEditor 5 SVG files.
+    .configureLoaderRule( 'images', loader => {
+        loader.exclude = /ckeditor5-[^/\\]+[/\\]theme[/\\]icons[/\\][^/\\]+\.svg$/;
+    } )
+
+    // Configure PostCSS loader.
+    .addLoader({
+        test: /ckeditor5-[^/\\]+[/\\]theme[/\\].+\.css$/,
+        loader: 'postcss-loader',
+        options: {
+            postcssOptions: styles.getPostCssConfig( {
+                themeImporter: {
+                    themePath: require.resolve( '@ckeditor/ckeditor5-theme-lark' )
+                },
+                minify: true
+            } )
+        }
+    } )
+;
     // uncomment if you use React
     //.enableReactPreset()
 

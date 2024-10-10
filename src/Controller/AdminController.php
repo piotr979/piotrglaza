@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Article;
 use App\Entity\Category;
 use App\Entity\Tag;
+use App\Form\ArticleType;
 use App\Form\CategoryType;
 use App\Form\TagType;
 use Doctrine\ORM\Tools\Pagination\Paginator;
@@ -26,9 +28,55 @@ class AdminController extends AbstractController
         return $this->render('admin/base.html.twig');
     }
     #[Route('/articles', name:'admin_articles')]
-    public function articles(): Response
+    public function articles(PaginatorInterface $paginator, Request $request): Response
     {
-        return $this->render('admin/articles/articles.html.twig');
+        $dql = "SELECT a from App\Entity\Article a";
+        $query = $this->entityManager->createQuery($dql);
+        $pagination = $paginator->paginate(
+            $query,
+            $request->query->getInt('page',1),
+            10
+        );
+        return $this->render('admin/articles/articles.html.twig', [
+            'pagination' => $pagination,
+        ]);
+    }
+    #[Route('/article-edit/{id}', name: 'admin_article_edit')]
+    public function editArticle(EntityManagerInterface $em, Request $request, int $id = 0): Response
+    {
+        $article = new Article();
+        $isNewArticle = true;
+        if ($id != 0 ) {
+            $article = $em->getRepository(Article::class)->find($id);
+            if (!$article) {
+                throw $this->createNotFoundException('No article found for id' . $id);
+            }
+            $isNewArticle = false;
+        }
+        $form = $this->createForm(ArticleType::class, $article);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $article = $form->getData();
+            $em->persist($article);
+            $em->flush();
+            return $this->redirectToRoute('admin_articles');
+        }
+        return $this->render('admin/articles/article-edit.html.twig', [
+            'form' => $form->createView(),
+            'article' => $article,
+            'isNewCategory' => $isNewArticle,
+        ]);
+    }
+    #[Route('/article-delete/{id}', name: "admin_article_delete")]
+    public function deleteArticle(EntityManagerInterface $em, Request $request, int $id): Response
+    {
+        $article = $em->getRepository(Article::class)->find($id);
+        if (!$article) {
+            throw $this->createNotFoundException("Tag not found");
+        }
+        $em->remove($article);
+        $em->flush();
+        return $this->redirectToRoute("admin_articles");
     }
     #[Route('/categories', name:'admin_categories')]
     public function categories(PaginatorInterface $paginator, Request $request): Response
@@ -54,7 +102,7 @@ class AdminController extends AbstractController
             if (!$category) {
                 throw $this->createNotFoundException('No category found for id' . $id);
             }
-            $isNewTag = false;
+            $isNewCategory = false;
         }
         $form = $this->createForm(CategoryType::class, $category);
         $form->handleRequest($request);
@@ -75,7 +123,7 @@ class AdminController extends AbstractController
     {
         $category = $em->getRepository(Category::class)->find($id);
         if (!$category) {
-            throw $this->createNotFoundException("Tag not found");
+            throw $this->createNotFoundException("Category not found");
         }
         $em->remove($category);
         $em->flush();

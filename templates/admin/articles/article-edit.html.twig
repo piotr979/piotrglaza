@@ -1,0 +1,16 @@
+{% extends 'admin/base.html.twig' %}
+{% block title %}Articles{% endblock %}
+
+{% block body %}
+{{ encore_entry_script_tags('ckeditor_init') }}
+<link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/43.2.0/ckeditor5.css" />
+<div class="admin-form container mx-auto mt-4">
+{% if isNewCategory == true %}
+		Add new article
+	{% else %}
+		Edit existing article
+	{% endif %}
+	
+   {{ form(form) }}
+</div>
+{% endblock %}
