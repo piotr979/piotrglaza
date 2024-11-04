@@ -42,7 +42,7 @@ corepack_enable: false
 #   PostgreSQL versions can be 9-16.
 
 router_http_port: 84  # Port to be used for http (defaults to global configuration, usually 80)
-# router_https_port: <port> # Port for https (defaults to global configuration, usually 443)
+router_https_port: 444 # Port for https (defaults to global configuration, usually 443)
 
 # xdebug_enabled: false  # Set to true to enable Xdebug and "ddev start" or "ddev restart"
 # Note that for most people the commands

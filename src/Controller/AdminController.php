@@ -12,14 +12,17 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 #[Route('admin')]
 class AdminController extends AbstractController
 {
-    public function __construct(private EntityManagerInterface $entityManager) 
+    public function __construct(private EntityManagerInterface $entityManager)
     {
     }
     #[Route('/', name: 'admin')]
@@ -27,14 +30,14 @@ class AdminController extends AbstractController
     {
         return $this->render('admin/base.html.twig');
     }
-    #[Route('/articles', name:'admin_articles')]
+    #[Route('/articles', name: 'admin_articles')]
     public function articles(PaginatorInterface $paginator, Request $request): Response
     {
         $dql = "SELECT a from App\Entity\Article a";
         $query = $this->entityManager->createQuery($dql);
         $pagination = $paginator->paginate(
             $query,
-            $request->query->getInt('page',1),
+            $request->query->getInt('page', 1),
             10
         );
         return $this->render('admin/articles/articles.html.twig', [
@@ -42,11 +45,16 @@ class AdminController extends AbstractController
         ]);
     }
     #[Route('/article-edit/{id}', name: 'admin_article_edit')]
-    public function editArticle(EntityManagerInterface $em, Request $request, int $id = 0): Response
-    {
+    public function editArticle(
+        EntityManagerInterface $em,
+        SluggerInterface $slugger,
+        Request $request,
+        #[Autowire('%images_directory%')] ?string $imagesDirectory,
+        int $id = 0,
+    ): Response {
         $article = new Article();
         $isNewArticle = true;
-        if ($id != 0 ) {
+        if ($id != 0) {
             $article = $em->getRepository(Article::class)->find($id);
             if (!$article) {
                 throw $this->createNotFoundException('No article found for id' . $id);
@@ -57,9 +65,24 @@ class AdminController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $article = $form->getData();
+            if ($id === 0) {
+                $article->setViews(0);
+            }
+            $imageFile = $form->get('image')->getData();
+            if ($imageFile) {
+                $originalFileName = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeFileName = $slugger->slug($originalFileName);
+                $newFileName = $safeFileName . '-' . uniqid() . '.' . $imageFile->guessExtension();
+
+                try {
+                    $imageFile->move($imagesDirectory, $newFileName);
+                } catch (FileException $e) {
+
+                }
+
+            }
             $em->persist($article);
             $em->flush();
-            return $this->redirectToRoute('admin_articles');
         }
         return $this->render('admin/articles/article-edit.html.twig', [
             'form' => $form->createView(),
@@ -78,14 +101,14 @@ class AdminController extends AbstractController
         $em->flush();
         return $this->redirectToRoute("admin_articles");
     }
-    #[Route('/categories', name:'admin_categories')]
+    #[Route('/categories', name: 'admin_categories')]
     public function categories(PaginatorInterface $paginator, Request $request): Response
     {
         $dql = "SELECT c from App\Entity\Category c";
         $query = $this->entityManager->createQuery($dql);
         $pagination = $paginator->paginate(
             $query,
-            $request->query->getInt('page',1),
+            $request->query->getInt('page', 1),
             10
         );
         return $this->render('admin/categories/categories.html.twig', [
@@ -97,7 +120,7 @@ class AdminController extends AbstractController
     {
         $category = new Category();
         $isNewCategory = true;
-        if ($id != 0 ) {
+        if ($id != 0) {
             $category = $em->getRepository(Category::class)->find($id);
             if (!$category) {
                 throw $this->createNotFoundException('No category found for id' . $id);
@@ -136,7 +159,7 @@ class AdminController extends AbstractController
         $query = $this->entityManager->createQuery($dql);
         $pagination = $paginator->paginate(
             $query,
-            $request->query->getInt('page',1),
+            $request->query->getInt('page', 1),
             10
         );
         return $this->render('admin/tags/tags.html.twig', [
@@ -148,7 +171,7 @@ class AdminController extends AbstractController
     {
         $tag = new Tag();
         $isNewTag = true;
-        if ($id != 0 ) {
+        if ($id != 0) {
             $tag = $em->getRepository(Tag::class)->find($id);
             if (!$tag) {
                 throw $this->createNotFoundException('No tag found for id' . $id);

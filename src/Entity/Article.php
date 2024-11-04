@@ -9,6 +9,8 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ArticleRepository::class)]
+#[ORM\HasLifecycleCallbacks]
+
 class Article
 {
     #[ORM\Id]
@@ -113,7 +115,6 @@ class Article
     public function setImage(?string $image): static
     {
         $this->image = $image;
-
         return $this;
     }
 
@@ -134,9 +135,10 @@ class Article
         return $this->publishedAt;
     }
 
-    public function setPublishedAt(\DateTimeImmutable $publishedAt): static
+    #[ORM\PrePersist]
+    public function setPublishedAt(): static
     {
-        $this->publishedAt = $publishedAt;
+        $this->publishedAt = new \DateTimeImmutable();
 
         return $this;
     }

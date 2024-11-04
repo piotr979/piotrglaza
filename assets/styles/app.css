@@ -45,7 +45,10 @@
     display: none;
     color: #BCB5A4
 }
-
+.multiple_select {
+    width: 15rem;
+    height: 15rem;
+}
 .admin-form label {
     display: block;
     padding-top: 2rem;

@@ -1,5 +1,4 @@
 const Encore = require('@symfony/webpack-encore');
-const { styles } = require( '@ckeditor/ckeditor5-dev-utils' );
 // Manually configure the runtime environment if not already configured yet by the "encore" command.
 // It's useful when you use tools that rely on webpack.config.js file.
 if (!Encore.isRuntimeEnvironmentConfigured()) {
@@ -70,19 +69,7 @@ Encore
     } )
 
     // Configure PostCSS loader.
-    .addLoader({
-        test: /ckeditor5-[^/\\]+[/\\]theme[/\\].+\.css$/,
-        loader: 'postcss-loader',
-        options: {
-            postcssOptions: styles.getPostCssConfig( {
-                themeImporter: {
-                    themePath: require.resolve( '@ckeditor/ckeditor5-theme-lark' )
-                },
-                minify: true
-            } )
-        }
-    } )
-;
+   
     // uncomment if you use React
     //.enableReactPreset()
 
