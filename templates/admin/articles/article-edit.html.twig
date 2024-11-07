@@ -1,16 +1,57 @@
 {% extends 'admin/base.html.twig' %}
-{% block title %}Articles{% endblock %}
+{% block title %}Articles
+{% endblock %}
 
 {% block body %}
-{{ encore_entry_script_tags('ckeditor_init') }}
-<link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/43.2.0/ckeditor5.css" />
-<div class="admin-form container mx-auto mt-4">
-{% if isNewCategory == true %}
-		Add new article
-	{% else %}
-		Edit existing article
-	{% endif %}
+	{{ encore_entry_script_tags('ckeditor_init') }}
+	<link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/43.2.0/ckeditor5.css"/>
+	<div class="admin-form container mx-auto mt-4">
+		{% if isNewCategory == true %}
+			Add new article
+		{% else %}
+			Edit existing article
+		{% endif %}
+
+
+		<div class="form-group">
+			{{ form_start(form) }}
+			{{ form_row(form.title)}}
+			{{ form_row(form.content)}}
+			{{ form_row(form.image) }}
+			<div id="image-preview" style="width: 100px; margin-top: 10px;">
+				{% if article.image %}
+					<img src="{{ asset('uploads/articles_images/' ~ article.image) }}" alt="Current image" id="preview-img" style="width: 100%; display: block;">
+				{% else %}
+					<img id="preview-img" style="width: 100%; display: none;">
+				{% endif %}
+			</div>
+			{{ form_row(form.status) }}
+			{{ form_row(form.tags) }}
+			{{ form_row(form.categories) }}
+			{{ form_row(form.submit) }}
+			{{ form_end(form) }}
+		</div>
+
+	</div>
+	 <script>
+		document.addEventListener('DOMContentLoaded', function() {
+			const fileInput = document.getElementById("{{ form.image.vars.id}}");
+			const previewImg= document.getElementById("preview-img");
 	
-   {{ form(form) }}
-</div>
+			fileInput.addEventListener("change", function() {
+				const file = fileInput.files[0];
+				if (file) {
+					const reader = new FileReader();
+					reader.onload = function (e) {
+						previewImg.src = e.target.result;
+						previewImg.style.display = "block";
+					}
+					reader.readAsDataURL(file);
+				} else {
+					previewImg.style.display = "none";
+					previewImg.src = "";
+				}
+			})
+		})
+	</script>
 {% endblock %}

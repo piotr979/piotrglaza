@@ -49,13 +49,15 @@ class AdminController extends AbstractController
         EntityManagerInterface $em,
         SluggerInterface $slugger,
         Request $request,
-        #[Autowire('%images_directory%')] ?string $imagesDirectory,
+        #[Autowire('%articles_images_directory%')] ?string $imagesDirectory,
         int $id = 0,
     ): Response {
         $article = new Article();
         $isNewArticle = true;
+        $articleImage = null;
         if ($id != 0) {
             $article = $em->getRepository(Article::class)->find($id);
+            $articleImage = $article->getImage();
             if (!$article) {
                 throw $this->createNotFoundException('No article found for id' . $id);
             }
@@ -73,7 +75,7 @@ class AdminController extends AbstractController
                 $originalFileName = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
                 $safeFileName = $slugger->slug($originalFileName);
                 $newFileName = $safeFileName . '-' . uniqid() . '.' . $imageFile->guessExtension();
-
+                $article->setImage($newFileName);
                 try {
                     $imageFile->move($imagesDirectory, $newFileName);
                 } catch (FileException $e) {
@@ -87,6 +89,7 @@ class AdminController extends AbstractController
         return $this->render('admin/articles/article-edit.html.twig', [
             'form' => $form->createView(),
             'article' => $article,
+            'article_image' => $articleImage,
             'isNewCategory' => $isNewArticle,
         ]);
     }
